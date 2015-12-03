@@ -11,11 +11,11 @@
 
 #define TM1650_DISPLAY_BASE		0x34	// Address of the left-most digit 
 #define TM1650_CONTROL_BASE		0x24	// Address of the control register of the left-most digit
-#define TM1650_NUM_DIGITS		4		// 4 segments
+#define TM1650_NUM_DIGITS		4	// 4 segments
 
-#define TM1650_MASK_BRIGHTNESS	0b10001111
-#define TM1650_MASK_COLLON		0b11110111
-#define TM1650_BIT_COLLON		0b00001000
+#define TM1650_MASK_BRIGHTNESS		0b10001111
+#define TM1650_MASK_COLON		0b11110111
+#define TM1650_BIT_COLON		0b00001000
 #define TM1650_MASK_ONOFF		0b11111110
 #define TM1650_BIT_ONOFF		0b00000001
 
@@ -39,11 +39,11 @@ B7 B6 B5 B4 B3 B2 B1 B0 Explanation
  */
 
 /*
-		0x01
-	0x20	0x02
-		0x40
-	0x10	0x04
-		0x08
+	0x01
+0x20		0x02
+	0x40
+0x10		0x04
+	0x08
  */
 
 const char TM1650_Digit_Table[] = {
@@ -74,8 +74,8 @@ class TM1650 {
 	void SetBrightness( unsigned char Brightness, uint8_t Segment );
 	void DisplayON( void );
 	void DisplayOFF( void );
-	void CollonON( void );
-	void CollonOFF( void );
+	void ColonON( void );
+	void ColonOFF( void );
 	void ClearDisplay( void );
 	void WriteNum( uint16_t num );
 	void WriteNum( uint16_t num, uint8_t position );
