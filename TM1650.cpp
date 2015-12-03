@@ -79,12 +79,12 @@ void TM1650::DisplayOFF( void ) {
 	}
 }
 
-void TM1650::CollonON( void ) {
-	SendControl( ( TM1650_CONTROL_STORE[0] & TM1650_MASK_COLLON ) | TM1650_BIT_COLLON );
+void TM1650::ColonON( void ) {
+	SendControl( ( TM1650_CONTROL_STORE[0] & TM1650_MASK_COLON ) | TM1650_BIT_COLON );
 }
 
-void TM1650::CollonOFF( void ) {
-	SendControl( TM1650_CONTROL_STORE[0] & TM1650_MASK_COLLON );
+void TM1650::ColonOFF( void ) {
+	SendControl( TM1650_CONTROL_STORE[0] & TM1650_MASK_COLON );
 }
 
 void TM1650::WriteNum( uint16_t num, uint8_t position ) {
