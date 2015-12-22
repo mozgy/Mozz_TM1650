@@ -9,6 +9,7 @@
 #ifndef TM1650_H
 #define TM1650_H
 
+#define TM1650_VERSION			0.2
 #define TM1650_DISPLAY_BASE		0x34	// Address of the left-most digit 
 #define TM1650_CONTROL_BASE		0x24	// Address of the control register of the left-most digit
 #define TM1650_NUM_DIGITS		4	// 4 segments
@@ -70,6 +71,7 @@ class TM1650 {
 	void SendControl( unsigned char Command, uint8_t Segment );
 	void SendDigit( unsigned char Data );
 	void SendDigit( unsigned char Data, uint8_t Segment );
+	void SetDot( uint8_t Segment, bool onoff );
 	void SetBrightness( unsigned char Brightness );
 	void SetBrightness( unsigned char Brightness, uint8_t Segment );
 	void DisplayON( void );

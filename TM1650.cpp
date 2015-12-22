@@ -15,20 +15,6 @@ TM1650::TM1650( void ) {
 	localNumDigits = TM1650_NUM_DIGITS;
 }
 
-void TM1650::SendControl( unsigned char data ) {
-	Wire.beginTransmission( localI2CControlAddress );
-	Wire.write( data );
-	Wire.endTransmission();
-	TM1650_CONTROL_STORE[0] = data;
-}
-
-void TM1650::SendDigit( unsigned char data ) {
-	Wire.beginTransmission( localI2CDisplayAddress );
-	Wire.write( data );
-	Wire.endTransmission();
-	TM1650_DIGITS_STORE[0] = data;
-}
-
 void TM1650::SendControl( unsigned char data, uint8_t segment ) {
 	segment = segment % TM1650_NUM_DIGITS;
 	Wire.beginTransmission( localI2CControlAddress + segment );
@@ -37,19 +23,32 @@ void TM1650::SendControl( unsigned char data, uint8_t segment ) {
 	TM1650_CONTROL_STORE[segment] = data;
 }
 
+void TM1650::SendControl( unsigned char data ) {
+	SendControl( data, 0 );
+}
+
 void TM1650::SendDigit( unsigned char data, uint8_t segment ) {
 	segment = segment % TM1650_NUM_DIGITS;
+	data = data & 0x7F;
+	data = data | ( TM1650_DIGITS_STORE[segment] & 0x80 );
 	Wire.beginTransmission( localI2CDisplayAddress + segment );
 	Wire.write( data );
 	Wire.endTransmission();
 	TM1650_DIGITS_STORE[segment] = data;
 }
 
-void TM1650::SetBrightness( unsigned char brightness ) {
-	if( brightness > 0x07 ) {
-		brightness = 0x07;
-	}
-	SendControl( ( TM1650_CONTROL_STORE[0] & TM1650_MASK_BRIGHTNESS ) | ( brightness << 4 ) );
+void TM1650::SendDigit( unsigned char data ) {
+	SendDigit( data, 0 );
+}
+
+void TM1650::SetDot( uint8_t segment, bool onoff ) {
+	segment = segment % TM1650_NUM_DIGITS;
+	unsigned char digit = TM1650_DIGITS_STORE[segment];
+	digit = ( onoff ) ? digit | 0x80 : digit & 0x7f;
+	Wire.beginTransmission( localI2CDisplayAddress + segment );
+	Wire.write( digit );
+	Wire.endTransmission();
+	TM1650_DIGITS_STORE[segment] = digit;
 }
 
 void TM1650::SetBrightness( unsigned char brightness, uint8_t segment ) {
@@ -58,6 +57,10 @@ void TM1650::SetBrightness( unsigned char brightness, uint8_t segment ) {
 	}
 	segment = segment % TM1650_NUM_DIGITS;
 	SendControl( ( ( TM1650_CONTROL_STORE[segment] & TM1650_MASK_BRIGHTNESS ) | ( brightness << 4 ) ), segment );
+}
+
+void TM1650::SetBrightness( unsigned char brightness ) {
+	SetBrightness( brightness, 0 );
 }
 
 void TM1650::ClearDisplay( void ) {
