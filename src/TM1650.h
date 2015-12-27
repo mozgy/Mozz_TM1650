@@ -4,14 +4,16 @@
  * 
  * MIT Licence
  *
+ *
+ * http://www.titanmic.com/e_productshow/?36-TM1650-36.html
  */
  
 #ifndef TM1650_H
 #define TM1650_H
 
 #define TM1650_VERSION			1.0
-#define TM1650_DISPLAY_BASE		0x34	// Address of the left-most digit 
 #define TM1650_CONTROL_BASE		0x24	// Address of the control register of the left-most digit
+#define TM1650_DISPLAY_BASE		0x34	// Address of the left-most digit 
 #define TM1650_NUM_DIGITS		4	// 4 segments
 
 #define TM1650_MASK_BRIGHTNESS		0b10001111
